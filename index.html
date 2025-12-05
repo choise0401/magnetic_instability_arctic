@@ -1,212 +1,1211 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="description"
-        content="Lorem ipsum dolor sit amet, consectetur adipiscing elit.">
-  <meta name="keywords" content="template, sample, html">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>A Fancy Project</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
-        rel="stylesheet">
+<title>Beneath the Melting Ice — Arctic Navigation Dashboard</title>
 
-  <link rel="stylesheet" href="./static/css/bulma.min.css">
-  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
-  <link rel="stylesheet" href="./static/css/index.css">
-  <link rel="icon" href="./static/images/favicon.png">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./static/css/bulma.min.css">
+
+<style>
+
+/* ---------------------------------------------------
+   GLOBAL — Light Ice Blue Navigation Dashboard
+--------------------------------------------------- */
+body {
+  background: #eaf6ff;
+  font-family: 'Inter', sans-serif;
+  color: #0b2742;
+  line-height: 1.45;
+  overflow-x: hidden;
+}
+  /* 🔥 여기에 넣기 — 맨 마지막 줄 바로 위 */
+  @media (max-width: 900px) {
+    #toc {
+      position: fixed;
+      right: 0;
+      top: 0;
+      width: 70%;
+      max-width: none;
+      height: 100vh;
+      overflow-y: auto;
+      transform: translateX(100%);
+      transition: transform 0.35s ease;
+      background: #ffffffee;
+      padding: 20px;
+      z-index: 99999;
+      box-shadow: -4px 0 14px rgba(0,0,0,0.15);
+    }
+
+    #toc.open {
+      transform: translateX(0);
+    }
+
+    #tocToggleBtn {
+      display: block;
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      z-index: 100000;
+      background: #0095d9;
+      color: white;
+      padding: 12px 16px;
+      border-radius: 50px;
+      font-size: 0.9rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+      cursor: pointer;
+    }
+  }
+
+  @media (min-width: 901px) {
+    #tocToggleBtn {
+      display: none;
+    }
+  }
+
+
+
+#references-section {
+  background: #e0f1ff;
+  padding-top: 1rem !important;
+  padding-bottom: 1rem !important;
+}
+
+/* --- MOBILE FIX FOR TOC --- */
+@media (max-width: 900px) {
+  #toc {
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 70%;
+    max-width: none;
+    height: 100vh;
+    overflow-y: auto;
+    transform: translateX(100%);
+    transition: transform 0.35s ease;
+    background: #ffffffee;
+    padding: 20px;
+    z-index: 99999;
+    box-shadow: -4px 0 14px rgba(0,0,0,0.15);
+  }
+
+  #toc.open {
+    transform: translateX(0);
+  }
+
+  /* TOC TOGGLE BUTTON */
+  #tocToggleBtn {
+    display: block;
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    z-index: 100000;
+    background: #0095d9;
+    color: white;
+    padding: 12px 16px;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    cursor: pointer;
+  }
+}
+
+/* Desktop에서는 버튼 숨김 */
+@media (min-width: 901px) {
+  #tocToggleBtn {
+    display: none;
+  }
+}
+
+
+   
+:root {
+  --navy: #0b2742;
+  --ice: #eaf6ff;
+  --cyan: #0095d9;
+  --glass-bg: rgba(255,255,255,0.83);
+  --border-soft: #bdd8ee;
+}
+
+.section {
+  padding-top: 2.6rem;
+  padding-bottom: 2.6rem;
+}
+
+h2.title {
+  color: var(--navy);
+  text-transform: uppercase;
+  letter-spacing: 1.4px;
+  font-weight: 300;
+  text-align: center;
+  margin-bottom: 2rem;
+  position: relative;
+  font-size: 2.1rem;
+}
+
+h2.title::after {
+  content: "";
+  width: 70px;
+  height: 3px;
+  background: var(--cyan);
+  position: absolute;
+  bottom: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 5px;
+}
+
+   /* RQ hyperlink-style text */
+.rq-link {
+  color: #0095d9;
+  text-decoration: underline;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+/* Tooltip Wrapper */
+.rq-tooltip {
+  position: relative;
+  display: inline-block;
+}
+/* CURRENT SECTION LABEL */
+#current-section {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 8px 16px;
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(6px);
+  font-size: 0.9rem;
+  color: #003357;
+  font-weight: 600;
+  z-index: 9999;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+/* PROGRESS BAR */
+#progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 4px;
+  background: #0095d9;
+  width: 0%;
+  z-index: 10000;
+  border-radius: 0 4px 4px 0;
+}
+
+
+/* Tooltip Box */
+.rq-box {
+  visibility: hidden;
+  opacity: 0;
+  background: #0b2742;
+  color: white;
+  padding: 10px 14px;
+  border-radius: 8px;
+  width: 260px;
+  font-size: 0.85rem;
+  line-height: 1.3;
+  position: absolute;
+  top: 135%;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  z-index: 30;
+  pointer-events: none;
+}
+
+/* Tooltip hover effect */
+.rq-tooltip:hover .rq-box {
+  visibility: visible;
+  opacity: 1;
+  transform: translateX(-50%) translateY(4px);
+}
+
+
+/* Cards */
+.arctic-box {
+  background: var(--glass-bg);
+  padding: 1.3rem;
+  border-radius: 12px;
+  border-left: 4px solid var(--cyan);
+  border: 1px solid var(--border-soft);
+  margin-bottom: 2rem;
+  width: min(90%, 900px);
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0 3px 16px rgba(0,0,0,0.08);
+}
+
+.method-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  width: min(95%, 1100px);
+  margin: auto;
+}
+
+.method-card {
+  background: var(--glass-bg);
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 1px solid var(--border-soft);
+  box-shadow: 0 3px 16px rgba(0,0,0,0.07);
+}
+
+figure {
+  background: var(--glass-bg);
+  border: 1px solid var(--border-soft);
+  border-radius: 14px;
+  padding: 14px;
+  width: min(90%, 900px);
+  margin: 3rem auto;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.1);
+  transition: transform .35s ease;
+}
+
+figure:hover {
+  transform: scale(1.03);
+}
+
+.centered-img {
+  width: 100%;
+  max-width: 850px;
+  display: block;
+  margin: auto;
+  border-radius: 12px;
+  box-shadow: 0 5px 18px rgba(0,0,0,0.15);
+}
+
+.hero {
+  background-image:
+    linear-gradient(rgba(255,255,255,0.92), rgba(232,245,255,0.88)),
+    url('./static/images/Arcticroute.png');
+  background-size: cover;
+  background-position: center;
+  height: 430px;
+}
+
+.hero-body {
+  text-align: center;
+  padding-top: 6rem;
+}
+
+.hero-title {
+  color: var(--navy);
+  font-size: 3rem;
+  font-weight: 400;
+}
+
+.hero-sub {
+  color: var(--cyan);
+  font-size: 1.8rem;
+  margin-top: .6rem;
+}
+
+.hero-names {
+  margin-top: 1.2rem;
+  color: #0d314f;
+}
+
+.fade-section {
+  opacity: 0;
+  transform: translateY(35px);
+  transition: opacity 1s ease, transform 1s ease;
+}
+
+.fade-section.visible {
+  opacity: 1;
+  transform: translateY(0px);
+}
+
+a { color: var(--cyan); }
+
+/* --- FINAL FIXED TOC (No cut-off) --- */
+#toc {
+  position: fixed;
+  top: 110px;
+  right: 30px;
+  width: 240px;
+
+  max-height: 78vh;         /* 화면에 꽉 차지 않게 */
+  overflow-y: auto;         /* 내부 스크롤 활성화 */
+
+  padding: 20px 22px;
+  background: #ffffffd9;
+  border-radius: 14px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+  border: 1px solid #bdd8ee;
+
+  z-index: 9900;
+  font-size: 0.96rem;
+  line-height: 1.45;
+}
+
+/* TOC HEADER */
+.toc-section {
+  margin-top: 16px;
+  margin-bottom: 6px;
+  font-weight: 700;
+  color: #003357;
+}
+
+/* TOC LINKS */
+#toc a {
+  display: block;
+  margin-left: 10px;
+  padding: 3px 0;
+  color: #0b2742;
+  text-decoration: none;
+  transition: .2s ease;
+}
+
+#toc a:hover {
+  color: #0095d9;
+  margin-left: 14px;
+}
+
+#toc a.active {
+  color: #0095d9;
+  font-weight: 700;
+}
+
+/* Scrollbar style */
+#toc::-webkit-scrollbar {
+  width: 6px;
+}
+#toc::-webkit-scrollbar-thumb {
+  background: #bdd8ee;
+  border-radius: 20px;
+}
+
+.references-box {
+  width: min(90%, 900px);
+  margin: 0 auto;      /* 정중앙으로 이동 */
+  padding: 25px 30px;  /* 내부 여백 */
+}
+
+/* LANGUAGE TOGGLE (left fixed) */
+#langToggle {
+  position: fixed;
+  top: 120px;
+  left: 25px;
+  background: rgba(255,255,255,0.9);
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid #bdd8ee;
+  cursor: pointer;
+  font-weight: 600;
+  z-index: 999;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+}
+
+/* KEY TERMS TOOLTIP */
+.tooltip {
+  position: relative;
+  cursor: help;
+  border-bottom: 1px dashed #0095d9;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  background: #0b2742;
+  color: #fff;
+  text-align: center;
+  border-radius: 8px;
+  padding: 8px 10px;
+  position: absolute;
+  z-index: 20;
+  top: 120%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 180px;
+  font-size: 0.85rem;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+.footer-container {
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.footer-person {
+  text-align: center;
+}
+
+.footer-name {
+  font-weight: 600;
+  font-size: 1.05rem;
+  margin-bottom: 4px;
+  color: #0b2742;
+}
+
+.footer-links a {
+  color: #006fa8;
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: color 0.2s;
+}
+
+.footer-links a:hover {
+  color: #0095d9;
+}
+
+.footer-sep {
+  margin: 0 6px;
+  color: #0b2742;
+  opacity: 0.55;
+}
+@media (max-width: 600px) {
+  .hero-names {
+    white-space: normal !important;
+    word-break: break-word !important;
+    text-align: center !important;
+    font-size: 0.9rem;
+    line-height: 1.35;
+    padding: 0 10px;
+  }
+}
+@media (max-width: 600px) {
+  #current-section {
+    font-size: 0.65rem !important;
+    padding: 6px 10px !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero-title {
+    font-size: 1.9rem !important;
+  }
+  .hero-sub {
+    font-size: 1.2rem !important;
+  }
+  .hero-names {
+    font-size: 0.78rem !important;
+    line-height: 1.25rem !important;
+  }
+}
+
+</style>
 </head>
+
 <body>
+<div id="current-section">📘 Now Reading: Introduction</div>
+<div id="progress-bar"></div>
+<div id="tocToggleBtn">☰ Menu</div>
+<!-- LANGUAGE TOGGLE -->
+<div id="langToggle">🌐 한국어</div>
 
-<section class="hero">
+<!-- TABLE OF CONTENTS -->
+<div id="toc">
+  <!-- OVERVIEW -->
+  <div class="toc-section" data-en="Overview" data-kr="개요">Overview</div>
+  <a href="#abstract" data-en="• Abstract" data-kr="• 초록">• Abstract</a>
+  <a href="#intro" data-en="• Introduction" data-kr="• 서론">• Introduction</a>
+  <a href="#terms" data-en="• Key Terms" data-kr="• 핵심 용어">• Key Terms</a>
+  <a href="#rq" data-en="• Research Questions" data-kr="• 연구 질문">• Research Questions</a>
+
+  <!-- BACKGROUND -->
+  <div class="toc-section" data-en="Background" data-kr="배경">Background</div>
+  <a href="#warming" data-en="• Arctic Warming" data-kr="• 북극 온난화">• Arctic Warming</a>
+  <a href="#routes" data-en="• Why Arctic Routes Matter" data-kr="• 북극 항로의 중요성">• Why Arctic Routes Matter</a>
+  <a href="#magnetic" data-en="• Magnetic Instability" data-kr="• 자기장 불안정성">• Magnetic Instability</a>
+
+  <!-- FINDINGS -->
+  <div class="toc-section" data-en="Findings" data-kr="결과">Findings</div>
+  <a href="#results" data-en="• Results" data-kr="• 분석 결과">• Results</a>
+  <a href="#interaction" data-en="• Sea-Ice × Magnetic Instability" data-kr="• 해빙 감소 × 자기장 불안정성">• Sea-Ice × Magnetic Instability</a>
+
+  <!-- DISCUSSION -->
+  <div class="toc-section" data-en="Discussion" data-kr="논의">Discussion</div>
+  <a href="#method" data-en="• Methodology" data-kr="• 연구 방법론">• Methodology</a>
+  <a href="#economic" data-en="• Economic Implications" data-kr="• 경제적 의미">• Economic Implications</a>
+
+  <!-- WRAP-UP -->
+  <div class="toc-section" data-en="Wrap-up" data-kr="마무리">Wrap-up</div>
+  <a href="#conclusion" data-en="• Conclusion" data-kr="• 결론">• Conclusion</a>
+  <a href="#references" data-en="• References" data-kr="• 참고 문헌">• References</a>
+</div>
+
+
+<!-- ---------------------------------------------------
+     1. HERO / TITLE
+--------------------------------------------------- -->
+<section class="hero fade-section" id="hero">
   <div class="hero-body">
-    <div class="container is-max-desktop">
-      <div class="columns is-centered">
-        <div class="column has-text-centered">
-          <h1 class="title is-1 publication-title">Ice melting</h1>
-          <div class="is-size-5 publication-authors">
-            <span class="author-block">
-              John Doe<sup>1</sup> and
-            </span>
-            <span class="author-block">
-              Jane Smith<sup>1</sup>
-            </span>
-          </div>
+    <h1 class="hero-title"
+        data-en="Beneath the Melting Ice"
+        data-kr="녹아가는 얼음, 그 속엔?">
+      Beneath the Melting Ice
+    </h1>
 
-          <div class="is-size-5 publication-authors">
-            <span class="author-block"><sup>1</sup>George Mason University Korea</span>
-          </div>
+    <h2 class="hero-sub"
+        data-en="Magnetic Instability Threatening Emerging Arctic Shipping Routes"
+        data-kr="새롭게 열리는 북극 항로를 위협하는 자기장 불안정성">
+      Magnetic Instability Threatening Emerging Arctic Shipping Routes
+    </h2>
 
+    <div class="hero-names"
+        data-en="Mujun Kim — mkim264@gmu.edu · Seungeun Choi — schoi72@gmu.edu<br>George Mason University Korea"
+        data-kr="김무준 — mkim264@gmu.edu · 최승은 — schoi72@gmu.edu<br>조지메이슨대학교 코리아 캠퍼스">
+      Mujun Kim — mkim264@gmu.edu ·
+      Seungeun Choi — scho472@gmu.edu<br>
+      George Mason University Korea
+    </div>
+  </div>
+</section>
+<!-- ---------------------------------------------------
+     2. ABSTRACT
+--------------------------------------------------- -->
+<section class="section fade-section" id="abstract">
+  <h2 class="title"
+      data-en="Abstract"
+      data-kr="초록">
+      Abstract
+  </h2>
+
+  <div class="arctic-box"
+       data-en="As the Arctic warms at an accelerated rate, the Northern Sea Route (NSR) and Northwest Passage (NWP) are emerging as seasonally navigable shipping corridors. However, the opening of these routes introduces a critical yet underexamined risk: geomagnetic instability. Steep magnetic inclination angles and rapidly shifting magnetic-field gradients—common near the poles—can distort Global Navigation Satellite System (GNSS) signals and reduce compass reliability, creating navigation uncertainty even in fully ice-free waters.<br><br>This project integrates climate observations, Arctic sea-ice trends, and geomagnetic outputs from the World Magnetic Model (WMM2025) to analyze how magnetic hotspots overlap with emerging Arctic shipping pathways. By examining temperature anomalies, long-term sea-ice decline, and magnetic-field variability, the study identifies segments of the NSR and NWP with the highest potential for GNSS drift or heading errors. These areas represent critical intersections between climate-driven accessibility and magnetic-field–driven navigational risk.<br><br>Our findings emphasize that Arctic accessibility cannot be evaluated solely through sea-ice loss. Instead, safe navigation requires an understanding of both physical opening and magnetic stability. As global trade increasingly turns toward northern sea routes, the reliability of navigation systems will play a central role in determining the viability, efficiency, and safety of future Arctic shipping operations."
+       data-kr="북극은 전 세계 평균보다 훨씬 빠른 속도로 따뜻해지면서 북동항로(NSR)와 북서항로(NWP)가 계절적으로 항해 가능한 새로운 해상 회랑으로 부상하고 있습니다. 그러나 이러한 항로가 열리면서 아직 충분히 논의되지 않은 중요한 위험, 즉 ‘지자기 불안정성’이 나타나고 있습니다. 극지방에서 흔히 나타나는 가파른 자기 경사각과 빠르게 변하는 자기장 구배는 GNSS 신호를 왜곡시키고 나침반 신뢰도를 저하시켜, 얼음이 완전히 없는 상태에서도 항해 불확실성을 초래할 수 있습니다.<br><br>본 연구는 기후 관측 자료, 북극 해빙 추세, 그리고 세계 자기장 모델(WMM2025)의 출력을 통합하여 자기장 위험 지역이 새롭게 열리는 항로와 어떻게 겹치는지를 분석합니다. 온도 이상치, 장기 해빙 감소, 자기장 변동성을 함께 검토하여 NSR과 NWP 중 GNSS 오차나 항로 이탈 가능성이 가장 높은 구간을 확인했습니다. 이러한 지역은 기후 변화로 인한 접근성 증가와 자기장 기반 항해 위험이 교차하는 중요한 지점입니다.<br><br>이 연구는 북극 항로 접근성을 평가할 때 단순히 해빙 감소만 고려하는 것이 충분하지 않음을 강조합니다. 안전한 북극 항해를 위해서는 물리적 개방성과 동시에 ‘자기장 안정성’에 대한 이해가 필수적입니다. 전 세계 무역이 북극 항로에 점점 더 의존하게 될수록, 항법 시스템의 신뢰도는 미래 북극 해운의 경제성, 효율성, 안전성을 결정하는 핵심 요소가 될 것입니다.">
+    As the Arctic warms at an accelerated rate...
+  </div>
+</section>
+
+
+<!-- ---------------------------------------------------
+     3. INTRODUCTION
+--------------------------------------------------- -->
+<!-- ---------------------------------------------------
+     3. INTRODUCTION (REVISED)
+--------------------------------------------------- -->
+<section class="section fade-section" id="intro">
+  <h2 class="title"
+      data-en="Introduction"
+      data-kr="서론">
+      Introduction
+  </h2>
+
+  <!-- Paragraph 1 -->
+  <div class="arctic-box"
+       data-en="The Arctic is warming nearly four times faster than the global average, accelerating the decline of multi-year sea ice and transforming previously inaccessible waters into seasonally navigable shipping corridors. As these newly ice-free zones expand, the Northern Sea Route (NSR) and the Northwest Passage (NWP) are emerging as alternative pathways connecting Asia, Europe, and North America. Their ability to shorten travel distances by thousands of kilometers represents a potential revolution in global maritime trade."
+       data-kr="북극은 전 세계 평균보다 약 네 배 빠르게 온난화되고 있으며, 이로 인해 다년생 해빙이 급격히 감소하고 접근이 불가능했던 해역이 계절적으로 항해 가능한 항로로 바뀌고 있습니다. 이러한 새로운 얼음 없는 구역이 확대되면서 북동항로(NSR)와 북서항로(NWP)는 아시아, 유럽, 북미를 연결하는 대체 해상 루트로 부상하고 있습니다. 이 항로들은 항해 거리를 수천 킬로미터 단축할 수 있어 글로벌 해상 무역에 혁명적인 변화를 가져올 잠재력을 지니고 있습니다.">
+    The Arctic is warming nearly four times faster than the global average...
+  </div>
+
+  <!-- Paragraph 2 -->
+  <div class="arctic-box"
+       data-en="Because these Arctic routes bypass traditional chokepoints such as the Suez Canal, the Strait of Malacca, and the Panama Canal, governments and private companies view them as strategic assets with the potential to reshape global supply chains. At the same time, the expansion of these corridors has intensified geopolitical debates over sovereignty and control. Russia asserts administrative authority over key segments of the NSR, while Canada maintains that the NWP constitutes internal territorial waters—claims that other states dispute, arguing that the passages function as international straits. As climate change accelerates the navigability of these waters, the Arctic is becoming a space where economic opportunity intersects with competing national interests."
+       data-kr="북극 항로는 수에즈 운하, 말라카 해협, 파나마 운하 같은 기존의 글로벌 무역 요충지를 우회할 수 있기 때문에 여러 국가와 기업들은 이를 공급망을 재편할 전략적 자산으로 보고 있습니다. 동시에 이러한 항로의 확장은 주권과 통제권을 둘러싼 지정학적 갈등을 심화시키고 있습니다. 러시아는 NSR 핵심 구간에 대한 행정적 통제권을 주장하고, 캐나다는 NWP가 자국의 내수라고 주장하지만, 다른 국가들은 이 항로들이 국제해협이라고 반박합니다. 기후 변화로 항로 접근성이 더 빨라질수록 북극은 경제적 기회와 국가 간 이해관계가 충돌하는 공간이 되고 있습니다.">
+    Because these Arctic routes bypass traditional chokepoints such as the Suez Canal...
+  </div>
+
+  <!-- Paragraph 3 -->
+  <div class="arctic-box"
+       data-en="Yet amid discussions of economics, logistics, and geopolitics, one crucial dimension remains largely overlooked: the electromagnetic environment governing navigation reliability. The Arctic is shaped by steep magnetic inclination angles, rapidly shifting magnetic-field gradients, and frequent geomagnetic disturbances. These conditions weaken GNSS accuracy, distort compass headings, and create positional drift that can threaten vessels even in perfectly ice-free waters."
+       data-kr="그러나 경제, 물류, 지정학에 대한 논의 속에서 많은 사람들이 간과하고 있는 중요한 요소가 있습니다. 바로 항해 안정성을 좌우하는 ‘지자기 환경’입니다. 북극은 가파른 자기 경사각, 빠르게 변하는 자기장 구배, 잦은 지자기 교란이 특징적인 지역입니다. 이러한 조건은 GNSS 정확도를 떨어뜨리고 나침반 방향을 왜곡시키며, 얼음이 완전히 없는 해역에서도 선박의 위치 오차를 발생시킬 수 있습니다.">
+    Yet amid discussions of economics, logistics, and geopolitics...
+  </div>
+
+  <!-- Paragraph 4 -->
+  <div class="arctic-box"
+       data-en="Geomagnetic instability refers to the way Earth's magnetic field becomes increasingly tilted, irregular, and dynamic near the poles. Instead of pointing horizontally as it does near the equator, the field plunges sharply downward. For non-experts, the key idea is simple: the farther north a ship travels, the more unstable and 'noisy' the magnetic environment becomes, causing navigation systems—both compass-based and satellite-based—to behave less reliably right where ice-free routes appear most promising."
+       data-kr="지자기 불안정성이란, 극지방으로 갈수록 지구 자기장이 더욱 기울어지고 불규칙해지며 변동성이 커지는 현상을 말합니다. 적도 근처에서는 자기장이 비교적 수평으로 흐르지만, 북극에 가까워질수록 자기장은 가파르게 아래로 꽂히듯 변합니다. 비전공자에게 중요한 핵심은 이것입니다: 북쪽으로 갈수록 자기 환경은 더 ‘불안정하고 시끄러워지며’, 그 결과 나침반 기반 항법과 위성 기반 항법 모두 오차가 커진다는 것입니다. 즉, 얼음이 사라져 가장 항해가 쉬워 보이는 구간에서 오히려 항해 오류가 증가할 수 있습니다.">
+    Geomagnetic instability refers to the way Earth's magnetic field becomes increasingly tilted...
+  </div>
+
+  <!-- Transition sentence -->
+  <div class="arctic-box"
+       data-en="For these reasons, evaluating the future of Arctic navigation requires more than tracking sea-ice loss. It also demands an understanding of the hidden magnetic risks embedded within these emerging corridors—an issue this study aims to uncover."
+       data-kr="이러한 이유로 북극 항로의 미래를 평가할 때 단순히 해빙 감소만을 보는 것은 충분하지 않습니다. 새롭게 열리는 항로 속에 숨어 있는 자기장 기반 위험을 이해하는 것이 필수적이며, 본 연구는 바로 이 문제를 조명하고자 합니다.">
+    For these reasons, evaluating the future of Arctic navigation requires more than tracking sea-ice loss...
+  </div>
+
+</section>
+
+
+
+<!-- ---------------------------------------------------
+     4. KEY TERMS
+--------------------------------------------------- -->
+<section class="section fade-section" id="terms">
+  <h2 class="title"
+      data-en="Key Terms"
+      data-kr="핵심 용어">
+      Key Terms
+  </h2>
+
+  <!-- TERM 1 -->
+  <div class="arctic-box">
+    <strong class="tooltip"
+            data-en="Magnetic Inclination"
+            data-kr="자기 경사각">
+      Magnetic Inclination
+      <span class="tooltiptext">자기 경사각 — 나침반 오류 증가</span>
+    </strong><br>
+
+    <span data-en="The angle at which Earth’s magnetic field lines dip into the surface. Near the poles, inclination approaches 90°, causing compass unreliability and increased GNSS signal noise."
+          data-kr="지구 자기장이 지표면을 향해 기울어지는 각도입니다. 극지방에서는 90°에 가까워져 나침반 오류가 커지고 GNSS 신호 노이즈가 증가합니다.">
+      The angle at which Earth’s magnetic field lines dip into the surface...
+    </span>
+  </div>
+
+  <!-- TERM 2 -->
+  <div class="arctic-box">
+    <strong class="tooltip"
+            data-en="Magnetic-Field Gradient"
+            data-kr="자기장 구배">
+      Magnetic-Field Gradient
+      <span class="tooltiptext">자기장 변화율 — GNSS 오차 증가</span>
+    </strong><br>
+
+    <span data-en="The rate at which magnetic-field intensity changes over short distances. Steep gradients commonly occur in high-latitude regions and are strongly associated with GNSS positional drift."
+          data-kr="짧은 거리에서 자기장 강도가 변하는 비율입니다. 고위도 지역에서 자주 나타나며 GNSS 위치 오차를 크게 증가시키는 요인입니다.">
+      The rate at which magnetic-field intensity changes over short distances...
+    </span>
+  </div>
+
+  <!-- TERM 3 -->
+  <div class="arctic-box">
+    <strong class="tooltip"
+            data-en="GNSS (Global Navigation Satellite System)"
+            data-kr="GNSS (위성항법시스템)">
+      GNSS
+      <span class="tooltiptext">위성 신호 기반 위치·항법 시스템</span>
+    </strong><br>
+
+    <span data-en="A satellite-based navigation system used for determining precise position and heading. In the Arctic, GNSS performance is weakened by low satellite elevation angles, multipath effects, and geomagnetic disturbances."
+          data-kr="정확한 위치와 방향을 계산하는 위성 기반 항법 시스템입니다. 북극에서는 낮은 위성 고도, 다중 경로 간섭, 지자기 교란으로 인해 성능이 저하됩니다.">
+      A satellite-based navigation system used for determining precise position...
+    </span>
+  </div>
+
+  <!-- TERM 4 -->
+  <div class="arctic-box">
+    <strong class="tooltip"
+            data-en="Northern Sea Route (NSR) / Northwest Passage (NWP)"
+            data-kr="북동항로(NSR) / 북서항로(NWP)">
+      NSR / NWP
+      <span class="tooltiptext">해빙 감소로 열리는 북극 주요 항로</span>
+    </strong><br>
+
+    <span data-en="Two major Arctic shipping corridors increasingly accessible due to sea-ice decline. Their economic importance is rising, but both routes intersect regions of magnetic instability."
+          data-kr="해빙 감소로 접근성이 높아지고 있는 두 주요 북극 항로입니다. 경제적 중요성이 커지고 있으나, 두 항로 모두 자기장 불안정 지역과 겹칩니다.">
+      Two major Arctic shipping corridors increasingly accessible due to sea-ice decline...
+    </span>
+  </div>
+</section>
+<!-- ---------------------------------------------------
+     5. RESEARCH QUESTIONS
+--------------------------------------------------- -->
+<section class="section fade-section" id="rq">
+  <h2 class="title"
+      data-en="Research Questions"
+      data-kr="연구 질문">
+      Research Questions
+  </h2>
+
+  <div class="arctic-box"
+       data-en="<strong>RQ1:</strong> How do magnetic inclination, magnetic-field gradients, and other geomagnetic variables vary across the Arctic region, particularly along the Northern Sea Route (NSR) and Northwest Passage (NWP)?"
+       data-kr="<strong>RQ1:</strong> 자기 경사각, 자기장 구배 등 주요 지자기 변수는 북극 전역, 특히 북동항로(NSR)와 북서항로(NWP)에서 어떻게 변화하는가?">
+    <strong>RQ1:</strong> How do magnetic inclination...
+  </div>
+
+  <div class="arctic-box"
+       data-en="<strong>RQ2:</strong> Where do magnetic-field hotspot regions overlap with existing or emerging Arctic shipping corridors, and which segments of the NSR and NWP are most vulnerable to GNSS degradation?"
+       data-kr="<strong>RQ2:</strong> 자기장 이상 지점은 기존 혹은 새롭게 열리는 북극 항로와 어디에서 겹치며, NSR/NWP 중 어떤 구간이 GNSS 성능 저하에 가장 취약한가?">
+    <strong>RQ2:</strong> Where do magnetic-field hotspot regions overlap...
+  </div>
+
+  <div class="arctic-box"
+       data-en="<strong>RQ3:</strong> How might navigation reliability, route safety, and operational decision-making be affected by the interaction between sea-ice retreat and geomagnetic instability?"
+       data-kr="<strong>RQ3:</strong> 해빙 감소와 지자기 불안정성이 상호작용할 때 항법 신뢰성, 항로 안전성, 운항 의사결정에 어떤 영향이 발생할 수 있는가?">
+    <strong>RQ3:</strong> How might navigation reliability...
+  </div>
+</section>
+
+
+
+<!-- ---------------------------------------------------
+     6. ARCTIC WARMING
+--------------------------------------------------- -->
+<section class="section fade-section" id="warming">
+  <h2 class="title"
+      data-en="Arctic Warming"
+      data-kr="북극의 온난화">
+      Arctic Warming
+  </h2>
+
+  <div class="arctic-box"
+       data-en="The Arctic is experiencing a phenomenon known as polar amplification, where temperatures rise significantly faster than the global average. This accelerated warming is driven by feedbacks such as sea-ice loss, reduced surface albedo, and enhanced ocean heat absorption. As multi-year ice thins and disappears, the region becomes dominated by younger, first-year ice that melts more easily during summer. Long-term satellite records show a steady decline in summer sea-ice extent, while winter freeze seasons have shortened and become more variable. These environmental shifts are transforming the Arctic into a seasonally navigable ocean, increasing the accessibility of the Northern Sea Route (NSR) and Northwest Passage (NWP) and motivating renewed interest in Arctic shipping."
+       data-kr="북극은 ‘극지 증폭(polar amplification)’ 현상으로 인해 지구 평균보다 훨씬 빠르게 온도가 상승하고 있습니다. 이러한 가속화된 온난화는 해빙 감소, 지표 알베도 감소, 해양 열 흡수 증가 등의 피드백으로 발생합니다. 다년빙은 점점 얇아지고 사라지면서 비교적 약한 일년빙이 더 우세해지고 있으며, 여름철에는 쉽게 녹아버립니다. 장기 위성 자료는 여름철 해빙 면적 감소가 꾸준히 이어지고, 겨울 결빙 기간도 짧아지고 변동성이 커졌음을 보여줍니다. 이러한 변화는 북극을 계절적으로 항해 가능한 해역으로 바꾸며, NSR과 NWP의 접근성을 높이고 북극 항해에 대한 관심을 증가시키고 있습니다.">
+    The Arctic is experiencing a phenomenon known as polar amplification...
+  </div>
+
+  <figure>
+    <img src="./static/images/global_temp.png" class="centered-img">
+    <figcaption data-en="<strong>Figure 1.</strong> Global temperature anomalies showing accelerated warming in the Arctic."
+                data-kr="<strong>그림 1.</strong> 북극에서 전 지구 평균보다 빠르게 나타나는 온도 상승 추세.">
+      <strong>Figure 1.</strong> Global temperature anomalies...
+    </figcaption>
+  </figure>
+
+  <figure>
+    <img src="./static/images/seaice_decline.png" class="centered-img">
+    <figcaption data-en="<strong>Figure 2.</strong> Long-term decline in Arctic summer sea-ice extent."
+                data-kr="<strong>그림 2.</strong> 북극 여름철 해빙 면적의 장기적 감소 추세.">
+      <strong>Figure 2.</strong> Long-term decline in Arctic summer sea-ice extent...
+    </figcaption>
+  </figure>
+
+</section>
+
+
+
+<!-- ---------------------------------------------------
+     7. WHY ARCTIC ROUTES MATTER
+--------------------------------------------------- -->
+<section class="section fade-section" id="routes">
+  <h2 class="title"
+      data-en="Why Arctic Routes Matter"
+      data-kr="왜 북극 항로가 중요한가">
+      Why Arctic Routes Matter
+  </h2>
+
+  <div class="arctic-box"
+       data-en="As sea-ice thins and retreats, two major Arctic corridors—the Northern Sea Route (NSR) and the Northwest Passage (NWP)—are becoming increasingly accessible during summer navigation seasons. These routes offer alternative pathways between Asia, Europe, and North America, bypassing traditional chokepoints such as the Suez and Panama Canals. Because seasonal openings are expanding, the NSR and NWP are gaining strategic and commercial importance for global shipping companies."
+       data-kr="해빙이 얇아지고 후퇴함에 따라 북극의 두 주요 항로—북동항로(NSR)와 북서항로(NWP)—가 여름 항해 시즌 동안 점점 더 접근 가능해지고 있습니다. 이러한 항로는 아시아, 유럽, 북미 간 이동 시 수에즈 운하나 파나마 운하 같은 기존 병목 구간을 우회할 수 있는 새로운 선택지를 제공합니다. 계절적 개방 기간이 확장됨에 따라 NSR과 NWP는 전략적·상업적 중요성이 커지고 있습니다.">
+    As sea-ice thins and retreats...
+  </div>
+
+  <figure>
+    <img src="./static/images/arctic_routes.png" class="centered-img">
+    <figcaption data-en="<strong>Figure 3.</strong> Major Arctic shipping routes."
+                data-kr="<strong>그림 3.</strong> 북극의 주요 항로(NSR/NWP) 지도.">
+      <strong>Figure 3.</strong> Major Arctic shipping routes...
+    </figcaption>
+  </figure>
+
+  <div class="arctic-box"
+       data-en="The NSR can shorten travel between East Asia and Northern Europe by up to 40%, while the NWP offers reductions for trans-North American routes. These shorter distances mean lower fuel consumption, reduced emissions, and significant cost savings. However, these economic advantages are only achievable if navigation remains safe—an issue complicated by the Arctic’s unstable magnetic environment."
+       data-kr="NSR은 동아시아와 북유럽 간 항로를 최대 40%까지 단축할 수 있으며, NWP는 북미 횡단 항로를 크게 단축할 수 있습니다. 항해 거리가 짧아지면 연료 소비, 탄소 배출, 비용이 크게 감소합니다. 그러나 이러한 경제적 이점은 항해가 안전하게 유지될 때만 실현되며, 북극의 불안정한 자기장 환경은 이를 복잡하게 만듭니다.">
+    The NSR can shorten travel between East Asia...
+  </div>
+</section>
+
+
+
+<!-- ---------------------------------------------------
+     8. MAGNETIC INSTABILITY
+--------------------------------------------------- -->
+<section class="section fade-section" id="magnetic">
+  <h2 class="title"
+      data-en="Magnetic Instability"
+      data-kr="자기장 불안정성">
+      Magnetic Instability
+  </h2>
+
+  <div class="arctic-box"
+       data-en="High-latitude regions feature unique geomagnetic conditions. As Earth’s magnetic field lines bend steeply into the surface near the poles, magnetic inclination approaches 90°, making traditional compass-based navigation unreliable. These steep inclinations amplify small variations in magnetic intensity, increasing heading errors—even in ice-free waters."
+       data-kr="고위도 지역은 독특한 지자기 조건을 가지고 있습니다. 극지방 근처에서는 지구 자기장이 거의 90°로 땅속으로 기울기 때문에 전통적인 나침반 항법이 매우 불안정해집니다. 이러한 가파른 경사각은 작은 자기장 변동도 크게 증폭하여, 얼음이 없는 상황에서도 항로 오차를 유발합니다.">
+    High-latitude regions feature unique geomagnetic conditions...
+  </div>
+
+  <figure>
+    <img src="./static/images/magnetic_inclination.png" class="centered-img">
+    <figcaption data-en="<strong>Figure 4.</strong> Magnetic inclination across the Arctic."
+                data-kr="<strong>그림 4.</strong> 북극 전역의 자기 경사각 분포.">
+      <strong>Figure 4.</strong> Magnetic inclination across the Arctic...
+    </figcaption>
+  </figure>
+
+  <div class="arctic-box"
+       data-en="In addition to steep inclination, the Arctic contains strong magnetic-field gradients—zones where magnetic intensity changes sharply over small distances. These gradients disrupt GNSS accuracy by introducing signal noise, multipath distortion, and ionospheric variability. In narrow Arctic passages, such errors can reduce maneuverability and increase collision risk."
+       data-kr="북극에는 가파른 경사각뿐 아니라 자기장 강도가 짧은 거리에서도 크게 변화하는 ‘자기장 구배’가 존재합니다. 이러한 구배는 신호 노이즈, 다중 경로 간섭, 전리층 변동을 증가시켜 GNSS 정확도를 약화시킵니다. 특히 폭이 좁고 지형이 복잡한 북극 해역에서는 이러한 오차가 충돌 위험과 조종 난이도를 높입니다.">
+    In addition to steep inclination, the Arctic contains strong magnetic-field gradients...
+  </div>
+</section>
+
+
+
+<!-- ---------------------------------------------------
+     9. RESULTS
+--------------------------------------------------- -->
+<section class="section fade-section" id="results">
+  <h2 class="title"
+      data-en="Results"
+      data-kr="연구 결과">
+      Results
+  </h2>
+
+  <figure>
+    <img src="./static/images/magnetic_hotspots.png" class="centered-img">
+    <figcaption data-en="<strong>Figure 5.</strong> Magnetic-field gradient hotspots."
+                data-kr="<strong>그림 5.</strong> 자기장 구배가 특히 큰 위험 지역.">
+      <strong>Figure 5.</strong> Magnetic-field gradient hotspots...
+    </figcaption>
+  </figure>
+
+  <figure>
+    <img src="./static/images/gnss_error.png" class="centered-img">
+    <figcaption data-en="<strong>Figure 6.</strong> GNSS error density."
+                data-kr="<strong>그림 6.</strong> GNSS 오차 밀도.">
+      <strong>Figure 6.</strong> Simulated GNSS error density...
+    </figcaption>
+  </figure>
+
+  <div class="arctic-box"
+       data-en="Our analysis shows that magnetic instability is highly uneven across the Arctic. The eastern Siberian shelf, Laptev Sea, Kara Sea, and central Canadian archipelago contain the steepest magnetic gradients and highest simulated GNSS drift. These overlap with major NSR and NWP segments, indicating substantial hidden navigation risk—even during fully ice-free seasons."
+       data-kr="분석 결과, 북극의 자기장 불안정성은 지역마다 극도로 다르게 나타났습니다. 시베리아 동부 대륙붕, 랩테프해, 카라해, 캐나다 북극 군도는 가장 가파른 자기장 구배와 높은 GNSS 오차를 보였습니다. 이러한 지역은 NSR과 NWP의 주요 항로와 겹쳐, 얼음이 완전히 없는 시기에도 상당한 항해 위험이 존재함을 보여줍니다.">
+    Our analysis shows that magnetic instability is highly uneven...
+  </div>
+</section>
+
+
+
+<!-- ---------------------------------------------------
+     10. SEA-ICE LOSS × MAGNETIC INSTABILITY
+--------------------------------------------------- -->
+<section class="section fade-section" id="interaction">
+  <h2 class="title"
+      data-en="Sea-Ice Loss × Magnetic Instability"
+      data-kr="해빙 감소와 자기장 불안정성의 연관성">
+      Sea-Ice Loss × Magnetic Instability
+  </h2>
+
+  <div class="arctic-box"
+       data-en="Rapid sea-ice decline is opening new Arctic spaces for navigation. As multi-year ice is replaced by thinner, more mobile first-year ice, ships gain access to waters that were historically unreachable. This trend extends seasonal navigability for the NSR and NWP."
+       data-kr="빠른 해빙 감소는 북극에서 새로운 항해 경로를 열고 있습니다. 다년빙이 사라지고 얇고 움직임이 많은 일년빙이 증가하면서, 선박은 역사적으로 접근할 수 없었던 해역까지 이동할 수 있게 되었습니다. 이러한 변화는 NSR과 NWP의 항해 가능 기간을 늘리고 있습니다.">
+    Rapid sea-ice decline is opening new Arctic spaces...
+  </div>
+
+  <div class="arctic-box"
+       data-en="However, our results show that areas with the largest sea-ice losses frequently overlap with regions of steep magnetic-field gradients and high GNSS drift. This means improved physical access does not guarantee safe navigation. Operators must account for both climate-driven accessibility and magnetic instability when planning routes."
+       data-kr="그러나 분석 결과, 해빙 감소가 가장 두드러진 지역은 가파른 자기장 구배와 높은 GNSS 오차 지역과 자주 겹치는 것으로 나타났습니다. 즉, 물리적으로 항로가 열렸다고 해서 안전한 항해가 보장되는 것은 아닙니다. 미래 북극 항해는 기후 변화로 인한 접근성과 더불어 ‘자기장 안정성’까지 함께 고려해야 합니다.">
+    However, our results show that areas with the largest sea-ice losses...
+  </div>
+</section>
+
+
+
+<!-- ---------------------------------------------------
+     11. METHODOLOGY
+--------------------------------------------------- -->
+<section class="section fade-section" id="method">
+  <h2 class="title"
+      data-en="Methodology"
+      data-kr="연구 방법">
+      Methodology
+  </h2>
+
+  <div class="method-grid">
+
+    <div class="method-card"
+         data-en="<strong>Data Collection</strong><br>We gathered climate data, Arctic sea-ice records, shipping-route shapefiles, and geomagnetic outputs from the World Magnetic Model (WMM2025)."
+         data-kr="<strong>데이터 수집</strong><br>기후 자료, 북극 해빙 기록, 항로 GIS 데이터, 세계 자기장 모델(WMM2025) 출력을 수집했습니다.">
+      <strong>Data Collection</strong><br>We gathered climate data...
+    </div>
+
+    <div class="method-card"
+         data-en="<strong>Magnetic-Field Computation</strong><br>Using WMM2025 coefficients, we calculated magnetic inclination, intensity, and field gradients across a high-latitude grid."
+         data-kr="<strong>자기장 계산</strong><br>WMM2025 계수를 사용하여 북극 전역의 자기 경사각, 강도, 구배를 계산했습니다.">
+      <strong>Magnetic-Field Computation</strong><br>Using WMM2025 coefficients...
+    </div>
+
+    <div class="method-card"
+         data-en="<strong>Visualization</strong><br>We created polar projection maps using Python, Cartopy, and Matplotlib to visualize magnetic hotspots and GNSS drift."
+         data-kr="<strong>시각화</strong><br>Python·Cartopy·Matplotlib을 사용하여 자기장 위험 지역과 GNSS 오차 지도를 북극 중심 투영으로 시각화했습니다.">
+      <strong>Visualization</strong><br>We created polar projection maps...
+    </div>
+
+    <div class="method-card"
+         data-en="<strong>Interpretation</strong><br>We compared maps with sea-ice decline datasets to identify where navigation risk and accessibility overlap."
+         data-kr="<strong>해석</strong><br>시각화된 지도와 해빙 감소 데이터를 비교하여 위험 지역과 항로 접근성이 겹치는 구간을 확인했습니다.">
+      <strong>Interpretation</strong><br>We compared maps with sea-ice decline datasets...
+    </div>
+
+  </div>
+</section>
+
+
+
+<!-- ---------------------------------------------------
+     12. ECONOMIC IMPLICATIONS
+--------------------------------------------------- -->
+<section class="section fade-section" id="economic">
+  <h2 class="title"
+      data-en="Economic Implications"
+      data-kr="경제적 영향">
+      Economic Implications
+  </h2>
+
+  <div class="arctic-box"
+       data-en="The Arctic route is often regarded as economically promising because the Northern Sea Route can reduce travel distance between East Asia and Northern Europe by up to 40%, potentially lowering fuel consumption and shortening delivery time. However, such projections generally assume zero navigation risk."
+       data-kr="북극 항로는 동아시아와 북유럽 간 이동 거리를 최대 40% 줄일 수 있어 연료 소비와 운송 시간을 크게 단축할 수 있다는 점에서 종종 경제적으로 유망한 경로로 평가됩니다. 그러나 이러한 전망은 일반적으로 항해 위험이 ‘0’이라고 가정한 계산입니다.">
+    The Arctic route is often regarded as economically promising...
+  </div>
+
+  <div class="arctic-box"
+       data-en="When the risk factors identified in this study are incorporated into an economic model, the outlook changes. Operating along high-risk Arctic corridors can lead to higher insurance premiums, delay-related costs, mandatory safety equipment, and potential rerouting, which may offset the expected economic benefits of shorter distance."
+       data-kr="하지만 본 연구에서 확인한 위험 요인들을 경제 모델에 반영하면 전망은 달라집니다. 고위험 북극 항로를 운항할 경우 보험료 상승, 지연 비용, 필수 안전 장비 구비, 그리고 우회 항로 가능성 등으로 인해 거리 단축으로 기대했던 경제적 이익이 상당 부분 상쇄될 수 있습니다.">
+    When the risk factors identified in this study...
+  </div>
+
+  <div class="arctic-box"
+       data-en="Therefore, the future of Arctic shipping is not solely a question of whether the route physically opens or not. Its economic value depends on the degree to which safe and reliable navigation can be maintained. In other words, trade benefits scale with accessibility only when navigation risks remain manageable."
+       data-kr="따라서 북극 항로의 미래는 단순히 항로가 물리적으로 열리느냐의 문제가 아닙니다. 경제적 가치는 안전하고 신뢰할 수 있는 항해가 얼마나 보장되느냐에 달려 있습니다. 즉, 무역 이익은 접근성이 높아질수록 증가하지만, 이는 항해 위험이 ‘관리 가능한 수준’일 때만 가능합니다.">
+    Therefore, the future of Arctic shipping is not solely a question...
+  </div>
+</section>
+
+
+
+<!-- ---------------------------------------------------
+     13. CONCLUSION (REVISED WITH RQ TOOLTIP LINKS)
+--------------------------------------------------- -->
+<section class="section fade-section" id="conclusion">
+  <h2 class="title"
+      data-en="Conclusion"
+      data-kr="결론">
+      Conclusion
+  </h2>
+
+  <div class="arctic-box"
+       data-en="
+       The opening of Arctic shipping routes presents new economic and geopolitical opportunities, but our analysis shows that magnetic instability remains a critical and underexamined constraint on safe navigation. 
+       <br><br>
+       <span class='rq-tooltip'>
+         In response to <span class='rq-link'>RQ1</span>
+         <span class='rq-box'>
+           RQ1: How do magnetic inclination, magnetic-field gradients, and other geomagnetic variables vary across the Arctic region?
+         </span>
+       </span>,
+       our findings show that magnetic inclination becomes extremely steep near the Laptev Sea, Kara Sea, and the Canadian Arctic Archipelago. These regions also exhibit strong magnetic-field gradients and high geomagnetic variability, conditions that reduce compass reliability and degrade GNSS accuracy.
+       <br><br>
+       <span class='rq-tooltip'>
+         Addressing <span class='rq-link'>RQ2</span>
+         <span class='rq-box'>
+           RQ2: Where do magnetic-field hotspots overlap with emerging Arctic shipping corridors?
+         </span>
+       </span>,
+       we identify that the eastern Northern Sea Route (NSR), the Laptev–Kara transition zone, and narrow straits within the Northwest Passage (NWP) show the highest levels of simulated GNSS drift. These magnetic hotspots align directly with real shipping pathways, creating operational challenges in regions already known for difficult navigation.
+       <br><br>
+       <span class='rq-tooltip'>
+         For <span class='rq-link'>RQ3</span>
+         <span class='rq-box'>
+           RQ3: How might navigation reliability be affected by sea-ice retreat interacting with magnetic instability?
+         </span>
+       </span>,
+       we conclude that sea-ice loss increases physical accessibility, but navigation safety does not improve at the same rate. Instead, positional drift, heading errors, and GNSS instability introduce persistent uncertainty that can influence route planning, transit speeds, and operational decision-making.
+       <br><br>
+       Overall, the future viability of Arctic shipping depends not only on climate-driven accessibility but also on the stability of the geomagnetic environment. Improving navigation accuracy in the Arctic will require enhanced GNSS systems, multi-sensor navigation strategies, and expanded geomagnetic monitoring across polar regions.
+       "
+       
+       data-kr="
+       북극 항로의 개방은 새로운 경제적·지정학적 기회를 제공하지만, 본 연구는 자기장 불안정성이 안전한 항해를 제한하는 주요 요소로 남아 있음을 보여준다.
+       <br><br>
+       <span class='rq-tooltip'>
+         첫번째 연구질문에 대한 결론으로 <span class='rq-link'>연구질문 1</span>
+         <span class='rq-box'>
+           연구질문 1: 자기 경사각, 자기장 구배, 기타 지자기 변수는 북극에서 어떻게 변화하는가?
+         </span>
+       </span>,
+       라프테프해, 카라해, 캐나다 북극 군도에서 자기 경사각이 극단적으로 증가하고 자기장 구배가 강하게 나타난다는 점을 확인했다. 이러한 조건은 나침반과 GNSS의 신뢰도를 크게 저하시킨다.
+       <br><br>
+       <span class='rq-tooltip'>
+         두번째 연구질문을 답하자면, <span class='rq-link'>연구질문 2</span>
+         <span class='rq-box'>
+           연구질문 2: 자기장 위험 지역은 북극 항로와 어디에서 겹치는가?
+         </span>
+       </span>,
+       북동항로(NSR) 동부 구간, 라프테프–카라해 전환대, 북서항로(NWP)의 좁은 해협이 시뮬레이션된 GNSS 오차가 가장 높은 구간으로 나타났다. 이는 실제 선박이 운항하는 경로와 정확히 겹친다.
+       <br><br>
+       <span class='rq-tooltip'>
+         그리고 마지막 연구질문에 대해선 <span class='rq-link'>연구질문 3</span>
+         <span class='rq-box'>
+           연구질문 3: 해빙 감소와 자기장 불안정성의 상호작용은 항해 안전성에 어떤 영향을 미치는가?
+         </span>
+       </span>,
+       해빙 감소로 물리적 접근성은 증가하지만 항법 신뢰성은 동시에 개선되지 않는다. 오히려 위치 오차, 방향 드리프트, GNSS 신호 불안정성이 지속적으로 발생하여 항속, 경로 선택, 운항 전략에 영향을 미친다.
+       <br><br>
+       종합적으로, 북극 항해의 미래는 해빙 감소뿐 아니라 자기장 환경의 안정성에 달려 있다. 안전한 운항을 위해서는 향상된 GNSS 기술, 다중 센서 기반 항법 시스템, 극지방 전역의 지자기 모니터링 강화가 필수적이다.
+       ">
+  </div>
+</section>
+
+<!-- ---------------------------------------------------
+     14. REFERENCES  (FIXED—NO LANGUAGE TOGGLE)
+--------------------------------------------------- -->
+<section class="fade-section" style="background:#eaf6ff; padding:0; margin-top:0;">
+   <h2 class="title">References</h2>
+   <div class="container is-max-desktop">
+      <div class="arctic-box references-box">
+         <ol> <li> Berkeley Earth. (Year). <em>Global daily average surface air temperature (Complete_TAVG_daily.txt)</em>. Retrieved from <a href="https://berkeley-earth-temperature.s3.us-west-1.amazonaws.com/Global/Complete_TAVG_daily.txt" target="_blank"> https://berkeley-earth-temperature.s3.us-west-1.amazonaws.com/Global/Complete_TAVG_daily.txt </a> </li> <li> European Space Agency (2019). <em>Arctic shipping routes.</em> <a href="https://www.esa.int/ESA_Multimedia/Images/2019/07/Arctic_shipping_routes" target="_blank"> https://www.esa.int/ESA_Multimedia/Images/2019/07/Arctic_shipping_routes </a> </li> <li> National Snow and Ice Data Center (NSIDC). (2025). <em>Sea Ice Index Data Set (v3).</em> <a href="https://nsidc.org/data/g02135" target="_blank">https://nsidc.org/data/g02135</a> </li> <li> NOAA National Centers for Environmental Information (Year). <em>Global Surface Temperature Anomalies.</em> Data retrieved from NCEI / HadCRUT5. </li> <li> NOAA Space Weather Prediction Center. (2025). <em>Planetary K-index Data.</em> <a href="https://www.swpc.noaa.gov/products/planetary-k-index" target="_blank"> https://www.swpc.noaa.gov/products/planetary-k-index </a> </li> <li> Rodríguez, J. P., Klemm, K., Duarte, C. M., & Eguíluz, V. M. <em>Arctic Shipping Dataset.</em> GitHub. <a href="https://github.com/jorgeprodriguezg/Arctic-shipping" target="_blank"> https://github.com/jorgeprodriguezg/Arctic-shipping </a> </li> <li> World Magnetic Model (WMM). (2025, October 14). <em>National Centers for Environmental Information (NCEI).</em> <a href="https://www.ncei.noaa.gov/products/world-magnetic-model" target="_blank"> https://www.ncei.noaa.gov/products/world-magnetic-model </a> </li> </ol> </div> </div> </section>
+
+
+
+<!-- ---------------------------------------------------
+     FOOTER (FIXED—NO LANGUAGE TOGGLE)
+--------------------------------------------------- -->
+<footer class="footer" style="background:#e0f1ff; color:#0b2742; margin-top:3rem;">
+  <div class="content has-text-centered">
+
+    <div class="footer-container">
+
+      <!-- MUJUN -->
+      <div class="footer-person">
+        <div class="footer-name">Mujun Kim</div>
+        <div class="footer-links">
+          <a href="https://www.linkedin.com/in/mujun-kim-96b73a392/" target="_blank">🔗 LinkedIn</a>
+          <span class="footer-sep">·</span>
+          <a href="mailto:mkim264@gmu.edu">✉ Email</a>
         </div>
       </div>
-    </div>
-  </div>
-</section>
 
-<section class="section">
-  <div class="container is-max-desktop">
-
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <h2 class="title is-3">Abstract</h2>
-        <div class="content has-text-justified">
-          <p>This is a template AI-generated text. This section contains a comprehensive introduction to the project’s core ideas and motivations. It presents the reader with an engaging overview of what the work is about, why it matters, and how it fits into the broader field. The text here outlines the key problem being addressed, highlights the opportunities and challenges, and sets the stage for the detailed developments in the following sections. It provides context by summarizing prior work or commonly encountered limitations, and articulates the unique contributions or novel approaches proposed. The narrative also emphasizes the potential impact of the project, both theoretically and practically, and may hint at empirical results or illustrative examples that will come later. By the end of this section, the reader should have a clear mental roadmap of what to expect: the objectives, the methodology, and the significance of the outcomes.</p>
+      <!-- SEUNGEUN -->
+      <div class="footer-person">
+        <div class="footer-name">Seungeun Choi</div>
+        <div class="footer-links">
+          <a href="https://www.linkedin.com/in/seungeun-choi-60b783291" target="_blank">🔗 LinkedIn</a>
+          <span class="footer-sep">·</span>
+          <a href="mailto:schoi72@gmu.edu">✉ Email</a>
         </div>
       </div>
+
     </div>
-  </div>
-</section>
 
-<section class="section">
-  <div class="container is-max-desktop">
-<h2 class="title is-3 has-text-centered">A Catchy Title for the First Section</h2>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tincidunt lectus quis libero interdum, non facilisis sapien aliquet. Sed sit amet ex hendrerit, dignissim purus sit amet, blandit est. Integer nec mauris at dolor egestas volutpat. Quisque efficitur metus vitae dolor fermentum, quis varius neque consectetur.
-      </p>
-    <figure class="image has-text-centered">
-        <img src="./static/images/Template_bar.png"
-       alt="Playfair 1801 chart"
-       class="img-small75"
-       style="display: inline-block; width: 75%; height: auto;">
-      <figcaption class="is-size-6 has-text-grey">
-        Figure 1. Visual representation of the project’s workflow using the template bar.
-      </figcaption>
-    </figure>
-    <div class="content has-text-justified">
-      <p>
-        Curabitur suscipit urna ut felis vulputate, nec dictum orci vehicula. Mauris aliquet, nunc et dignissim tincidunt, urna est tempus lacus, ut suscipit ex tellus a ipsum. Donec pretium tempor justo vitae molestie. Fusce ullamcorper leo id purus sodales, at cursus felis lacinia. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
-      </p>
-    </div>
-  </div>
-</section>
-
-
-<section class="section">
-<div class="container is-max-desktop">
-  <div class="columns is-centered">
-
-    <!-- Feature A -->
-    <div class="column">
-      <div class="content">
-        <h2 class="title is-3 has-text-centered">Feature A</h2>
-        <p>
-          In this section, we introduce Feature A, a core component of the project that plays a pivotal role in achieving the overall goals. The importance of this feature stems from its ability to bridge critical gaps in existing workflows, deliver performance enhancements, and unlock new possibilities for visualization, analysis, or interactivity.
-        </p>
-        <!-- Optional media/image/video goes here -->
-        <!-- <img src="./static/images/featureA.png" alt="Feature A illustration"> -->
-      </div>
-    </div>
-    <!-- /Feature A -->
-
-    <!-- Feature B -->
-    <div class="column">
-      <div class="content">
-        <h2 class="title is-3 has-text-centered">Feature B</h2>
-        <p>
-          Feature B is also important. In this section, we introduce Feature B, another core component of the project that plays a pivotal role in achieving the overall goals. The importance of this feature stems from its ability to bridge critical gaps in existing workflows, deliver performance enhancements, and unlock new possibilities for visualization, analysis, or interactivity.
-        </p>
-        <!-- Optional media/image/video goes here -->
-        <!-- <img src="./static/images/featureB.png" alt="Feature B illustration"> -->
-      </div>
-    </div>
-    <!-- /Feature B -->
-
-  </div>
-</div>
-</section>
-
-<section class="section">
-  <div class="container is-max-desktop">
-<h2 class="title is-3 has-text-centered">Another Catchy Title for the Second Section</h2>
-    <figure class="image has-text-centered">
-      <img src="./static/images/waterfall_example.png" alt="Template bar illustration">
-<figcaption class="is-size-6 has-text-grey">
-  Figure 2. Waterfall chart, which shows the cumulative breakdown of changes (positive and negative) across different categories, illustrating how each step contributes to the final total.  
-</figcaption>
-    </figure>
-
-    <div class="content has-text-justified">
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tincidunt lectus quis libero interdum, non facilisis sapien aliquet. Sed sit amet ex hendrerit, dignissim purus sit amet, blandit est. Integer nec mauris at dolor egestas volutpat. Quisque efficitur metus vitae dolor fermentum, quis varius neque consectetur. Curabitur suscipit urna ut felis vulputate, nec dictum orci vehicula. Mauris aliquet, nunc et dignissim tincidunt, urna est tempus lacus, ut suscipit ex tellus a ipsum. Donec pretium tempor justo vitae molestie. Fusce ullamcorper leo id purus sodales, at cursus felis lacinia. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
-      </p>
-    </div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="container is-max-desktop">
-<h2 class="title is-3 has-text-centered">Another Catchy Title for the Third Section</h2>
-    <figure class="image has-text-centered">
-<div style="text-align: center;">
-  <img src="./static/images/P_05-playfair-1801-plate1.png"
-       alt="Playfair 1801 chart"
-       class="img-small75"
-       style="display: inline-block; width: 75%; height: auto;">
-</div>
-<figcaption class="is-size-6 has-text-grey">
-  Figure 3. William Playfair's 1801 'Chart of the Extent, Population and Revenue of the Principal Nations of Europe.' The central pie displays each nation's share of European land area, while red and yellow radial bars show, respectively, population size and annual government revenue. First printed in <em>The Statistical Breviary</em>, it is widely regarded as the earliest known multi-slice pie chart and highlights the contrast between territorial extent, demographic weight, and fiscal power.
-</figcaption>
-
-    </figure>
-
-    <div class="content has-text-justified">
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tincidunt lectus quis libero interdum, non facilisis sapien aliquet. Sed sit amet ex hendrerit, dignissim purus sit amet, blandit est. Integer nec mauris at dolor egestas volutpat. Quisque efficitur metus vitae dolor fermentum, quis varius neque consectetur. Curabitur suscipit urna ut felis vulputate, nec dictum orci vehicula. Mauris aliquet, nunc et dignissim tincidunt, urna est tempus lacus, ut suscipit ex tellus a ipsum. Donec pretium tempor justo vitae molestie. Fusce ullamcorper leo id purus sodales, at cursus felis lacinia. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
-      </p>
-    </div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="container is-max-desktop">
-    <h2 class="title is-3 has-text-centered">Outro</h2>
-    <div class="content">
-      <p>
-        This is the last section. In this part, we bring together all the ideas explored throughout the project, reflecting on what was learned, what worked well, and what challenges emerged. We revisit the core objectives, summarizing how each was addressed, and highlight the most significant insights that have arisen from the work. Moreover, we outline how the outcomes contribute to the broader field, what implications they may have for future research or real-world applications, and why these findings matter. In addition, this section proposes concrete next steps: further experiments, methods refinement, validation on new datasets, collaborative extensions, or deployment scenarios. We also discuss potential limitations, acknowledge open questions, and suggest areas that merit deeper investigation.
-      </p>
-    </div>
-  </div>
-</section>
-
-  <section class="section">
-  <div class="container is-max-desktop">
-    <h2 class="title is-3 has-text-centered">References and Data Sources</h2>
-    <div class="content has-text-justified">
-  <p>  
-    1. Black, Joe; Doe, Jane; and Lee, Maria. “Template Paper Title on Data Analysis.” <em>Journal of Data Analysis & Visualization</em> 30, no. 1 (2023): 100-120.  
-  </p>
-  <p>  
-    2. White, Chris; Green, Anna; and Kim, Sam. “Template Methods for Interactive Dashboards.” <em>International Journal of Interactive Visualization</em> 25, no. 2 (2022): 210-234.  
-  </p>
-  <p>  
-    3. Miller, Pat; Gomez, Sofia; and Zhang, Lin. “Template Techniques for Labels & Annotation in Multidimensional Graphs.” <em>Computational Graphics & Data Systems</em> 12, no. 3 (2024): 45-70.  
-  </p>
-  <p>  
-    4. Wright, Ben; Park, Soo; and O’Neil, Pat. “Template Approaches to Temporal Flow Visualization.” <em>Decision Support & Data Analytics</em> 14, no. 3 (2021): 300-320.  
-  </p>
-    </div>
-  </div>
-</section>
-
-
-<footer class='footer footer-compact'>
-  <div class="container">
-    <div class="content has-text-centered">
-      <p>
-       This website was created as coursework for <strong>CDS 301 / 501: Scientific Information and Data Visualization (Fall 2025) at George Mason Korea</strong>.
-      </p>
-      <p>
-        This website is licensed under a <a rel="license"
-        href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
-      </p>
-      <p>
-        Template design is based on the example site available at <a href="https://utkuozbulak.github.io/cds_301_template_website/" target="_blank" rel="noopener">CDS 301 Template Website</a>, which itself uses a layout from the <a href="https://github.com/nerfies/nerfies.github.io" target="_blank" rel="noopener">Nerfies project site</a>.
-      </p>
-    </div>
+    <p style="opacity:0.7; margin-top:18px;">George Mason University Korea</p>
   </div>
 </footer>
 
+   <!-- ============================================================
+     SCRIPT — Fade-in, TOC smooth-scroll, Language Toggle
+=============================================================== -->
+
+<script>
+// Fade-in observer
+const observer = new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.15 });
+
+document.querySelectorAll('.fade-section').forEach(section=>{
+  observer.observe(section);
+});
+
+// Smooth scrolling for TOC
+document.querySelectorAll('#toc a').forEach(link => {
+  link.addEventListener('click', function(e) {
+    e.preventDefault();
+    document.querySelector(this.getAttribute('href'))
+      .scrollIntoView({ behavior: 'smooth' });
+  });
+});
+
+// Language Toggle
+let lang = "EN";
+
+document.getElementById("langToggle").onclick = () => {
+  lang = lang === "EN" ? "KR" : "EN";
+  document.getElementById("langToggle").innerText =
+    lang === "EN" ? "🌐 한국어" : "🌐 English";
+
+  document.querySelectorAll("[data-en]").forEach(el => {
+    el.innerHTML = lang === "EN" ? el.dataset.en : el.dataset.kr;
+  });
+};
+
+// INITIAL LANGUAGE SYNC
+window.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll("[data-en]").forEach(el => {
+    el.innerHTML = el.dataset.en;
+  });
+});
+</script>
+
+
+<!-- 🔥🔥🔥 여기 아래에 새 ScrollSpy + ProgressBar 넣기 -->
+<script>
+
+/* ---------------------------
+   SCROLL SPY + CURRENT LABEL
+----------------------------*/
+
+// Sections with IDs
+const sections = document.querySelectorAll("section[id]");
+const tocLinks = document.querySelectorAll("#toc a");
+
+// Intersection observer for scroll spy
+const spyOptions = {
+  root: null,
+  threshold: 0.35,
+};
+
+const spyObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+const id = entry.target.getAttribute("id");
+
+      // highlight TOC
+      tocLinks.forEach(link => {
+        link.classList.remove("active");
+        if (link.getAttribute("href") === `#${id}`) {
+          link.classList.add("active");
+        }
+      });
+
+      // update "Now Reading"
+      const targetLink = document.querySelector(`#toc a[href="#${id}"]`);
+      if (targetLink) {
+        const cs = document.getElementById("current-section");
+
+        if (window.innerWidth < 600) {
+          cs.innerText = "📘 " + targetLink.dataset.en;
+        } else {
+          cs.innerText = "📘 Now Reading: " + targetLink.dataset.en;
+        }
+      }
+
+    }
+  });
+}, spyOptions);
+
+sections.forEach(section => spyObserver.observe(section));
+
+
+   
+
+
+/* ---------------------------
+    READING PROGRESS BAR
+----------------------------*/
+
+window.addEventListener("scroll", () => {
+  const scrollTop = window.scrollY;
+  const docHeight = document.body.scrollHeight - window.innerHeight;
+  const progress = (scrollTop / docHeight) * 100;
+
+  document.getElementById("progress-bar").style.width = progress + "%";
+});
+
+   // 📌 TOC 슬라이드 메뉴 (모바일)
+document.getElementById("tocToggleBtn").addEventListener("click", () => {
+  document.getElementById("toc").classList.toggle("open");
+});
+
+   
+</script>
 
 </body>
 </html>
-
